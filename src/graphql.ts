@@ -11,7 +11,7 @@ const books = [
 const typeDefs = `
   type Query {
     books: [Book],
-    posts(ids: [String] = []): [Post],
+    posts(ids: [String]): [Post],
   }
   type Mutation {
     createPost(
@@ -31,7 +31,7 @@ const typeDefs = `
 const resolvers = {
   Query: {
     books: () => books,
-    posts: (root, { ids }, context) =>  ids.length > 0 && Post.find({ '_id': { $in: ids }}) || Post.find()
+    posts: (root, { ids }, context) =>  ids && Post.find({ '_id': { $in: ids }}) || Post.find()
   },
   Mutation: {
     createPost: (root, { keyId, data }, context) => new Post({ keyId, data }).save()
