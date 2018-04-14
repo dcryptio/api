@@ -1,4 +1,5 @@
 const { makeExecutableSchema } = require('graphql-tools');
+const Post = require('./models/post')
 
 // Some fake data
 const books = [
@@ -8,13 +9,29 @@ const books = [
 
 // The GraphQL schema in string form
 const typeDefs = `
-  type Query { books: [Book] }
+  type Query {
+    books: [Book],
+    posts: [Post]
+  }
+  type Mutation {
+    createPost(
+      keyId: String,
+      data: String
+    ): Post
+  }
   type Book { title: String, author: String }
+  type Post { keyId: String, data: String  }
 `;
 
 // The resolvers
 const resolvers = {
-  Query: { books: () => books },
+  Query: {
+    books: () => books,
+    posts: () => Post.find()
+  },
+  Mutation: {
+    createPost: (root, {keyId, data}, context) => new Post({ keyId, data }).save()
+  }
 };
 
 // Put together a schema

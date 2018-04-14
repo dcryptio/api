@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
-const URI = 'mongodb://127.0.0.1:27017/dcyptio-api'
+const MONGO_URI = 'mongodb://127.0.0.1:27017/dcryptio-api'
 
 const start = uri => {
-  const mongoUri = uri || process.env.MONGO || URI
+  const mongoUri = uri || process.env.MONGO_URI || MONGO_URI
   mongoose.connect(mongoUri)
   const db = mongoose.connection
   db.on('connected', () => console.log(`Connected MongoDB at: ${mongoUri}`))
