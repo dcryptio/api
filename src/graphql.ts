@@ -10,6 +10,7 @@ const books = [
 // The GraphQL schema in string form
 const typeDefs = `
   type Query {
+    # All books
     books: [Book],
     posts(ids: [String]): [Post],
   }

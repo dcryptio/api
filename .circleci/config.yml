@@ -1,7 +1,7 @@
 version: 2
 jobs:
 
-  docker-api:
+  build-api:
     docker:
       - image: circleci/node:9
         environment:
@@ -17,7 +17,7 @@ jobs:
       - run: docker push $REPO:$(git describe)
       - run: docker push $REPO
 
-  deploy:
+  deploy-api:
     docker:
       - image: circleci/node:8.5
     working_directory: ~/api
@@ -45,13 +45,13 @@ workflows:
   version: 2
   workflow:
       jobs:
-        - docker-api:
+        - build-api:
             filters:
               branches:
                 only: master
-        - deploy:
+        - deploy-api:
             requires:
-              - docker-api
+              - build-api
         - docker-maintenance:
             requires:
-              - deploy
+              - deploy-api
