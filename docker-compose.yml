@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+  api:
+    image: negebauer/dcryptio-api
+    environment:
+      - MONGO_URI=mongodb://mongo/dcryptio-api'
+    ports:
+      - "3000:80"
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "~/data/mongodb/db:/data/db"
