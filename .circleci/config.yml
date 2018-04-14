@@ -1,0 +1,57 @@
+version: 2
+jobs:
+
+  docker-api:
+    docker:
+      - image: circleci/node:9
+        environment:
+          REPO: negebauer/dcryptio-api
+    working_directory: ~/api
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 17.05.0-ce
+      - run: docker build -t $REPO .
+      - run: docker tag $REPO $REPO:$(git describe)
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker push $REPO:$(git describe)
+      - run: docker push $REPO
+
+  deploy:
+    docker:
+      - image: circleci/node:8.5
+    working_directory: ~/api
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "29:fd:53:e8:3b:d9:4a:33:6f:34:03:40:20:e0:c5:c7"
+      - run: scp -o "StrictHostKeyChecking no" docker-compose.yml root@167.99.169.114:./dcryptio-api
+      - run: ssh root@167.99.169.114 '(cd dcryptio-api && docker-compose pull api)'
+      - run: ssh root@167.99.169.114 '(cd dcryptio-api && docker-compose up -d)'
+
+  docker-maintenance:
+    docker:
+      - image: circleci/node:8.5
+    working_directory: ~/api
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "29:fd:53:e8:3b:d9:4a:33:6f:34:03:40:20:e0:c5:c7"
+      - run: ssh -o "StrictHostKeyChecking no" root@167.99.169.114 'echo y | docker system prune'
+
+workflows:
+  version: 2
+  workflow:
+      jobs:
+        - docker-api:
+            filters:
+              branches:
+                only: master
+        - deploy:
+            requires:
+              - docker-api
+        - docker-maintenance:
+            requires:
+              - deploy

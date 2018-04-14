@@ -10,7 +10,7 @@ const mongo = require('./db')
 const app = new Koa()
 app.context.db = mongo.start()
 const router = new koaRouter();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(koaBody());
 // koaBody is needed just for POST.

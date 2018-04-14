@@ -4,8 +4,6 @@ WORKDIR /api
 
 COPY package.json ./
 COPY yarn.lock ./
-# If we have the modules, lets copy instead of downloading
-COPY .gitignore node_modules ./node_modules/
 RUN yarn
 
 COPY . .
