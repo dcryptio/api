@@ -12,10 +12,16 @@ app.context.db = mongo.start()
 const router = new koaRouter();
 const PORT = process.env.PORT || 3000;
 
+const graphql = graphqlKoa({
+  schema,
+  tracing: true,
+  cacheControl: true
+})
+
 app.use(koaBody());
 // koaBody is needed just for POST.
-router.post('/graphql', graphqlKoa({ schema }));
-router.get('/graphql', graphqlKoa({ schema }));
+router.post('/graphql', graphql);
+router.get('/graphql', graphql);
 router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }));
 
 app.use(logger('dev'))
