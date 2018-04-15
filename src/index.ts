@@ -4,11 +4,10 @@ const logger = require('koa-logger')
 const koaRouter = require('koa-router')
 const koaBody = require('koa-bodyparser')
 const { graphqlKoa, graphiqlKoa } = require('apollo-server-koa')
+const { PORT } = require('./constants')
 const schema = require('./graphql')
 const mongo = require('./db')
 
-
-const PORT = process.env.PORT || 3000
 const app = new Koa()
 app.context.db = mongo.start()
 const router = new koaRouter()

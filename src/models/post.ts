@@ -8,7 +8,7 @@ const PostSchema = new Schema({
     required: [true, 'User keyName missing'],
   },
   data: {
-    type: Buffer
+    type: Buffer,
   },
 })
 
