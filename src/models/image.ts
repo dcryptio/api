@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const model = 'post'
-const PostSchema = new Schema({
+const model = 'image'
+const ImageSchema = new Schema({
   keyName: {
     type: String,
     required: [true, 'User keyName missing'],
@@ -12,4 +12,4 @@ const PostSchema = new Schema({
   },
 })
 
-module.exports = mongoose.model(model, PostSchema)
+module.exports = mongoose.model(model, ImageSchema)
