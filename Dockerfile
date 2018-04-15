@@ -1,6 +1,8 @@
-FROM node:9
+FROM node:9-alpine
 
 WORKDIR /api
+
+RUN apk add --update openssl
 
 COPY package.json ./
 COPY yarn.lock ./
