@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 const graphql = graphqlKoa({
   schema,
   // tracing: true,
-  cacheControl: true
+  // cacheControl: true
 })
 
 app.use(koaBody());
