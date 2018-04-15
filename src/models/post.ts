@@ -5,9 +5,9 @@ const ValidatorError = mongoose.Error.ValidatorError
 
 const model = 'post'
 const PostSchema = new Schema({
-  keyId: {
+  keyName: {
     type: String,
-    required: [true, 'User keyId missing'],
+    required: [true, 'User keyName missing'],
   },
   data: {
     type: Buffer

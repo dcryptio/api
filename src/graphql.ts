@@ -16,14 +16,14 @@ const typeDefs = `
   }
   type Mutation {
     createPost(
-      keyId: String,
+      keyName: String,
       data: String
     ): Post
   }
   type Book { title: String, author: String }
   type Post {
     id: String,
-    keyId: String,
+    keyName: String,
     data: String
   }
 `;
@@ -35,7 +35,7 @@ const resolvers = {
     posts: (root, { ids }, context) =>  ids && Post.find({ '_id': { $in: ids }}) || Post.find()
   },
   Mutation: {
-    createPost: (root, { keyId, data }, context) => new Post({ keyId, data }).save()
+    createPost: (root, { keyName, data }, context) => new Post({ keyName, data }).save()
   }
 };
 
