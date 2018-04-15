@@ -4,7 +4,7 @@ services:
   api:
     image: negebauer/dcryptio-api
     environment:
-      - MONGO_URI=mongodb://mongo/dcryptio-api'
+      - MONGO_URI=mongodb://mongo/dcryptio-api
     ports:
       - "80:80"
 
