@@ -1,7 +1,7 @@
 const { makeExecutableSchema } = require('graphql-tools')
 const { getFb, postFb } = require('./fetch')
-const Post = require('./models/post')
-const Image = require('./models/image')
+const TextPost = require('./models/textPost')
+const ImagePost = require('./models/imagePost')
 
 const typeDefs = `
   type Query {
@@ -58,13 +58,13 @@ const typeDefs = `
 // The resolvers
 const resolvers = {
   Query: {
-    posts: (root, { ids }, context) =>  ids && Post.find({ '_id': { $in: ids }}) || Post.find(),
-    images: (root, { ids }, context) =>  ids && Image.find({ '_id': { $in: ids }}) || Image.find(),
+    posts: (root, { ids }, context) =>  ids && TextPost.find({ '_id': { $in: ids }}) || TextPost.find(),
+    images: (root, { ids }, context) =>  ids && ImagePost.find({ '_id': { $in: ids }}) || ImagePost.find(),
     user: async (root, { id }, context) => getFb(id),
   },
   Mutation: {
-    createPost: (root, { keyName, data }, context) => new Post({ keyName, data }).save(),
-    createImage: (root, { keyName, data }, context) => new Image({ keyName, data }).save(),
+    createPost: (root, { keyName, data }, context) => new TextPost({ keyName, data }).save(),
+    createImage: (root, { keyName, data }, context) => new ImagePost({ keyName, data }).save(),
   },
 };
 

@@ -1,7 +1,6 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+import { model, Schema } from 'mongoose'
 
-const model = 'post'
+const PostModel = 'textPost'
 const PostSchema = new Schema({
   keyName: {
     type: String,
@@ -12,4 +11,4 @@ const PostSchema = new Schema({
   },
 })
 
-module.exports = mongoose.model(model, PostSchema)
+module.exports = model(PostModel, PostSchema)

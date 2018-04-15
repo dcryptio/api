@@ -13,28 +13,20 @@ async function fetch(path, options = {}) {
   return json
 }
 
-function get(path, options = {}) {
+export function get(path, options = {}) {
   return fetch(path, { ...options, method: 'GET' })
 }
 
-function post(path, options = {}) {
+export function post(path, options = {}) {
   return fetch(path, { ...options, method: 'POST' })
 }
 
-function getFb(path, options = {}) {
-  const headers = { ...(options.headers || {}), Authorization: `Bearer ${FACEBOOK_API_TOKEN}` }
+export function getFb(path, options = { headers: {} }) {
+  const headers = { ...options.headers, Authorization: `Bearer ${FACEBOOK_API_TOKEN}` }
   return get(`${FACEBOOK_API_BASE_URL}/${path}`, { ...options, headers })
 }
 
-function postFb(path, options = {}) {
-  const headers = { ...(options.headers || {}), Authorization: `Bearer ${FACEBOOK_API_TOKEN}` }
+export function postFb(path, options = { headers: {} }) {
+  const headers = { ...options.headers, Authorization: `Bearer ${FACEBOOK_API_TOKEN}` }
   return post(`${FACEBOOK_API_BASE_URL}/${path}`, { ...options, headers })
-}
-
-module.exports = {
-  fetch,
-  get,
-  post,
-  getFb,
-  postFb,
 }
