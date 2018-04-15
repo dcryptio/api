@@ -1,29 +1,27 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const Post = require('./models/post')
 
-// Some fake data
-const books = [
-  { title: "Harry Potter and the Sorcerer's stone", author: 'J.K. Rowling' },
-  { title: 'Jurassic Park', author: 'Michael Crichton', },
-];
-
-// The GraphQL schema in string form
 const typeDefs = `
   type Query {
-    # All books
-    books: [Book],
+    # All encrypted posts. Can filter by id
     posts(ids: [String]): [Post],
   }
   type Mutation {
+    # Create a new post
     createPost(
-      keyName: String,
-      data: String
+      # The user keyName identifier
+      keyName: String!,
+      # The encrypted data
+      data: String!
     ): Post
   }
-  type Book { title: String, author: String }
+  # An encrypted post
   type Post {
+    # The encrypted data identifier
     id: String,
+    # The user keyName identifier
     keyName: String,
+    # The encrypted data
     data: String
   }
 `;
@@ -31,7 +29,6 @@ const typeDefs = `
 // The resolvers
 const resolvers = {
   Query: {
-    books: () => books,
     posts: (root, { ids }, context) =>  ids && Post.find({ '_id': { $in: ids }}) || Post.find()
   },
   Mutation: {
@@ -40,9 +37,9 @@ const resolvers = {
 };
 
 // Put together a schema
-const schema = makeExecutableSchema({
+const executableSchema = makeExecutableSchema({
   typeDefs,
   resolvers,
 });
 
-module.exports = schema
+module.exports = executableSchema

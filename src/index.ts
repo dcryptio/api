@@ -19,7 +19,6 @@ const graphql = graphqlKoa({
 })
 
 app.use(koaBody());
-// koaBody is needed just for POST.
 router.post('/graphql', graphql);
 router.get('/graphql', graphql);
 router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }));
