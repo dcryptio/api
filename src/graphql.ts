@@ -17,6 +17,7 @@ const typeDefs = `
       # The encrypted post
       data: String!
     ): Post
+    # Create a new image
     createImage(
       # The user keyName identifier
       keyName: String!,
