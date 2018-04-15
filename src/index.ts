@@ -19,11 +19,15 @@ const graphql = graphqlKoa({
 })
 
 app.use(koaBody())
-router.post('/graphql', graphql)
+app.use(logger('dev'))
+
+router.post('/graphql', (ctx, next) => {
+  console.log(ctx.request.body)
+  return graphql(ctx, next)
+})
 router.get('/graphql', graphql)
 router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
 
-app.use(logger('dev'))
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.listen(PORT, err => {
