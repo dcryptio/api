@@ -1,4 +1,4 @@
-const { makeExecutableSchema } = require('graphql-tools');
+const { makeExecutableSchema } = require('graphql-tools')
 const Post = require('./models/post')
 const Image = require('./models/image')
 
@@ -52,8 +52,8 @@ const resolvers = {
   },
   Mutation: {
     createPost: (root, { keyName, data }, context) => new Post({ keyName, data }).save(),
-    createImage: (root, { keyName, data }, context) => new Image({ keyName, data }).save()
-  }
+    createImage: (root, { keyName, data }, context) => new Image({ keyName, data }).save(),
+  },
 };
 
 // Put together a schema
