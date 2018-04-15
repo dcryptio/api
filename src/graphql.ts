@@ -2,6 +2,7 @@ const { makeExecutableSchema } = require('graphql-tools')
 const { getFb, postFb } = require('./fetch')
 const TextPost = require('./models/textPost')
 const ImagePost = require('./models/imagePost')
+const { generateKeyPair } = require('./generateKeyPair')
 
 const typeDefs = `
   type Query {
@@ -11,6 +12,8 @@ const typeDefs = `
     images(ids: [String]): [Image],
     # Information about a facebook user
     user(id: String!): User
+    # Obtain a random key
+    generateKeyPair: KeyPair
   }
   type Mutation {
     # Create a new post
@@ -53,6 +56,11 @@ const typeDefs = `
     # The user's id
     id: ID
   }
+  # A KeyPair for encryption
+  type KeyPair {
+    private: String!
+    public: String!
+  }
 `;
 
 // The resolvers
@@ -61,6 +69,7 @@ const resolvers = {
     posts: (root, { ids }, context) =>  ids && TextPost.find({ '_id': { $in: ids }}) || TextPost.find(),
     images: (root, { ids }, context) =>  ids && ImagePost.find({ '_id': { $in: ids }}) || ImagePost.find(),
     user: async (root, { id }, context) => getFb(id),
+    generateKeyPair: async () => generateKeyPair()
   },
   Mutation: {
     createPost: (root, { keyName, data }, context) => new TextPost({ keyName, data }).save(),

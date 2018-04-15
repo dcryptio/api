@@ -27,6 +27,7 @@
     "lodash": "^4.17.4",
     "mongoose": "^5.0.14",
     "node-fetch": "^2.1.2",
+    "pem": "^1.12.5",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3"
   },
