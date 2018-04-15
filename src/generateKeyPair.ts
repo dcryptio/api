@@ -22,7 +22,7 @@ async function genPrivKey(length: number): Promise<ByteString> {
   );
 }
 
-export async function generateKeyPair(length = 512) {
+export async function generateKeyPair(length = 1024) {
   let privKey = await genPrivKey(length);
   let pubKey = await getPubKey(privKey);
   if (!pubKey) {
